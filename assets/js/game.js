@@ -23,14 +23,21 @@ var fightOrSkip = function() {
     return false;
 }
 var fight = function(enemy) {
+    
+    var isPlayerTurn = true;
+
+    if (Math.random() < 0.5) {
+        isPlayerTurn = false;
+    }
     // Alert players that they are starting the round
     // Subtract the value of 'playerInfo.attack ' from the value of 'enemy.health' and use that result to update the value in the 'enemy.health' variable
     while (playerInfo.health > 0 && enemy.health > 0) {
-        
-        if (fightOrSkip()) {
+        if (isPlayerTurn) {
 
-            break;
-        }
+            if (fightOrSkip()) {
+
+                break;
+            }
    
             var damage = randomNumber(playerInfo.attack -3, playerInfo.attack );
             enemy.health = Math.max(0, enemy.health - damage);
@@ -41,13 +48,15 @@ var fight = function(enemy) {
 
             if (enemy.health <= 0) {
                 window.alert(enemy.name + " has died!");
+                playerInfo.money = playerInfo.money + 20;
                 break;
             }
             
             else {
                 window.alert(enemy.name + " still has " + enemy.health + " health left.")
             }
-
+        }
+        else {
             // Subtract the value of 'enemy.attack' from the value of 'playerInfo.health' and use that result to update the value in the 'playerInfo.health' variable
             var damage = randomNumber(enemy.attack - 3, enemy.attack);
             playerInfo.health = Math.max(0, playerInfo.health - damage);
@@ -60,8 +69,9 @@ var fight = function(enemy) {
             else {
                 window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.")
             }
-
-}
+        }
+    isPlayerTurn = !isPlayerTurn;
+    }
 };
 
 
