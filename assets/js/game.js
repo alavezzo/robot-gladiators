@@ -1,3 +1,4 @@
+
 var fightOrSkip = function() {
     // ask player if they'd like to fight or skip using fightOrSkip function
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP to choose.");
@@ -22,6 +23,7 @@ var fightOrSkip = function() {
     }
     return false;
 }
+
 var fight = function(enemy) {
     
     var isPlayerTurn = true;
@@ -112,6 +114,23 @@ var endGame = function() {
     else {
         window.alert("You've lost your robot in battle.");
     }
+
+    var highScore = localStorage.getItem('highScore')
+   
+    if (highScore === null) {
+        highScore = 0;
+    }
+
+    if (playerInfo.money > highScore){
+        localStorage.setItem('highScore', playerInfo.money);
+        localStorage.setItem('playerName', playerInfo.name);
+        window.alert("Congratulations! The new high score is " + playerInfo.money + " !");
+    }
+
+    else {
+       window.alert("Sorry you did not break the high score of " + highScore + ".");
+    }
+    
     var playAgainConfirm = window.confirm("Would you like to play again?");
     if (playAgainConfirm) {
         // restart game
@@ -208,6 +227,8 @@ var enemyInfo = [
 attack: randomNumber(10, 14)
 }
 ];
+
+
 
 startGame();
 
